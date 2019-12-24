@@ -8,8 +8,6 @@ Summary:        Application deployment framework for desktop apps
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Add Fedora flatpak repositories
-Source1:        flatpak-add-fedora-repos.service
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -33,11 +31,6 @@ BuildRequires:  systemd
 BuildRequires:  xdg-dbus-proxy
 
 %{?systemd_requires}
-
-# Require the version of system-release that adds
-# flatpak-add-fedora-repos.service preset.
-# Should be fine to drop in F32.
-Requires(post): system-release >= 30-0.25
 
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
@@ -136,27 +129,9 @@ getent passwd flatpak >/dev/null || \
 exit 0
 
 
-%post
-%systemd_post flatpak-add-fedora-repos.service
+%post -n flatpak-libs -p /sbin/ldconfig
 
-if [ $1 -gt 1 ] ; then
-        # Apply the preset also on package updates to support F29->F31 upgrade
-        # path. systemd_post macro only handles initial installs and not the
-        # case when a new .service file appears on a package update.
-        # Should be fine to drop in F32.
-        systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
-fi
-
-
-%preun
-%systemd_preun flatpak-add-fedora-repos.service
-
-
-%postun
-%systemd_postun_with_restart flatpak-add-fedora-repos.service
-
-%ldconfig_scriptlets libs
-
+%postun -n flatpak-libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %license COPYING
@@ -191,7 +166,6 @@ fi
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
-%{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
