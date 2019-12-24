@@ -1,4 +1,3 @@
-%global bubblewrap_version 0.4.0
 %global ostree_version 2018.9
 
 Name:           flatpak
@@ -15,7 +14,7 @@ Source1:        flatpak-add-fedora-repos.service
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
-BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
+BuildRequires:  gdk-pixbuf
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
@@ -26,18 +25,12 @@ BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
-BuildRequires:  pkgconfig(xau)
 BuildRequires:  bison
-BuildRequires:  bubblewrap >= %{bubblewrap_version}
-BuildRequires:  docbook-dtds
-BuildRequires:  docbook-style-xsl
 BuildRequires:  gettext
 BuildRequires:  gpgme-devel
 BuildRequires:  libcap-devel
 BuildRequires:  systemd
-BuildRequires:  /usr/bin/xdg-dbus-proxy
-BuildRequires:  /usr/bin/xmlto
-BuildRequires:  /usr/bin/xsltproc
+BuildRequires:  xdg-dbus-proxy
 
 %{?systemd_requires}
 
@@ -46,21 +39,13 @@ BuildRequires:  /usr/bin/xsltproc
 # Should be fine to drop in F32.
 Requires(post): system-release >= 30-0.25
 
-Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
-# https://fedoraproject.org/wiki/SELinux/IndependentPolicy
-Requires:       (flatpak-selinux = %{?epoch:%{epoch}:}%{version}-%{release} if selinux-policy-targeted)
 Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Recommends:     p11-kit-server
 
-# Make sure the document portal is installed
-%if 0%{?fedora} || 0%{?rhel} > 7
-Recommends:     xdg-desktop-portal > 0.10
-%else
 Requires:       xdg-desktop-portal > 0.10
-%endif
 
 %description
 flatpak is a system for building, distributing and running sandboxed desktop
@@ -79,23 +64,11 @@ This package contains the pkg-config file and development headers for %{name}.
 %package libs
 Summary:        Libraries for %{name}
 License:        LGPLv2+
-Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
 Requires(pre):  /usr/sbin/useradd
 
 %description libs
 This package contains libflatpak.
-
-%package selinux
-Summary:        SELinux policy module for %{name}
-License:        LGPLv2+
-BuildRequires:  selinux-policy
-BuildRequires:  selinux-policy-devel
-BuildArch:      noarch
-%{?selinux_requires}
-
-%description selinux
-This package contains the SELinux policy module for %{name}.
 
 %package session-helper
 Summary:        User D-Bus service used by %{name} and others
@@ -113,7 +86,6 @@ License:        LGPLv2+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       %{name}-session-helper%{?_isa} = %{version}-%{release}
-Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
 
 %description tests
@@ -121,7 +93,7 @@ This package contains installed tests for %{name}.
 
 
 %prep
-%autosetup -p1
+%setup -q -n %{name}-%{version}/flatpak
 
 
 %build
@@ -129,16 +101,17 @@ This package contains installed tests for %{name}.
 find tests -name '*.py' -exec \
     sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
 
-(if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
+(if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--disable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
  export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"
  %configure \
-            --enable-docbook-docs \
+            --disable-docbook-docs \
             --enable-installed-tests \
-            --enable-selinux-module \
+            --disable-selinux-module \
             --with-priv-mode=none \
-            --with-system-bubblewrap \
             --with-system-dbus-proxy \
+            --disable-xauth \
+            --disable-documentation \
             $CONFIGFLAGS)
 %make_build V=1
 
@@ -173,9 +146,6 @@ if [ $1 -gt 1 ] ; then
         systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
 fi
 
-%post selinux
-%selinux_modules_install %{_datadir}/selinux/packages/flatpak.pp.bz2
-
 
 %preun
 %systemd_preun flatpak-add-fedora-repos.service
@@ -183,12 +153,6 @@ fi
 
 %postun
 %systemd_postun_with_restart flatpak-add-fedora-repos.service
-
-%postun selinux
-if [ $1 -eq 0 ]; then
-    %selinux_modules_uninstall %{_datadir}/selinux/packages/flatpak.pp.bz2
-fi
-
 
 %ldconfig_scriptlets libs
 
@@ -245,10 +209,6 @@ fi
 %license COPYING
 %{_libdir}/girepository-1.0/Flatpak-1.0.typelib
 %{_libdir}/libflatpak.so.*
-
-%files selinux
-%{_datadir}/selinux/packages/flatpak.pp.bz2
-%{_datadir}/selinux/devel/include/contrib/flatpak.if
 
 %files session-helper
 %license COPYING
