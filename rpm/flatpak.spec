@@ -156,19 +156,13 @@ exit 0
 %{_libexecdir}/flatpak-validate-icon
 %{_libexecdir}/revokefs-fuse
 %dir %{_localstatedir}/lib/flatpak
-%{_mandir}/man1/%{name}*.1*
-%{_mandir}/man5/%{name}-metadata.5*
-%{_mandir}/man5/flatpak-flatpakref.5*
-%{_mandir}/man5/flatpak-flatpakrepo.5*
-%{_mandir}/man5/flatpak-installation.5*
-%{_mandir}/man5/flatpak-remote.5*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-%{_systemd_user_env_generator_dir}/60-flatpak
+# %{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
