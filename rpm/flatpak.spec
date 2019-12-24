@@ -152,7 +152,7 @@ exit 0
 %{_datadir}/zsh/site-functions
 %{_libexecdir}/flatpak-oci-authenticator
 %{_libexecdir}/flatpak-portal
-%{_libexecdir}/flatpak-system-helper
+# %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
 %{_libexecdir}/revokefs-fuse
 %dir %{_localstatedir}/lib/flatpak
