@@ -32,7 +32,7 @@ BuildRequires:  xdg-dbus-proxy
 
 %{?systemd_requires}
 
-Requires:       librsvg2%{?_isa}
+Requires:       librsvg%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
 Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
