@@ -91,6 +91,9 @@ Requires:       ostree%{?_isa} >= %{ostree_version}
 %description tests
 This package contains installed tests for %{name}.
 
+# extra variables
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 
 %prep
 %setup -q -n %{name}-%{version}/flatpak
@@ -161,7 +164,7 @@ fi
 %license COPYING
 # Comply with the packaging guidelines about not mixing relative and absolute
 # paths in doc.
-#%doc %{_pkgdocdir}
+%doc %{_pkgdocdir}
 %{_bindir}/flatpak
 %{_bindir}/flatpak-bisect
 %{_bindir}/flatpak-coredumpctl
