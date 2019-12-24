@@ -116,7 +116,6 @@ find tests -name '*.py' -exec \
 %make_install
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
-install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
