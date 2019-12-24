@@ -38,7 +38,7 @@ Requires:       /usr/bin/xdg-dbus-proxy
 Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Recommends:     p11-kit-server
 
-Requires:       xdg-desktop-portal > 0.10
+#Requires:       xdg-desktop-portal > 0.10
 
 %description
 flatpak is a system for building, distributing and running sandboxed desktop
