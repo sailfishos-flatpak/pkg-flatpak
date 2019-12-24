@@ -152,7 +152,6 @@ exit 0
 %{_datadir}/zsh/site-functions
 %{_libexecdir}/flatpak-oci-authenticator
 %{_libexecdir}/flatpak-portal
-# %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
 %{_libexecdir}/revokefs-fuse
 %dir %{_localstatedir}/lib/flatpak
@@ -162,7 +161,6 @@ exit 0
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-# %{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
