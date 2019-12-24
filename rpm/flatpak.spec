@@ -121,8 +121,6 @@ find tests -name '*.py' -exec \
 
 %install
 %make_install
-install -pm 644 NEWS README.md %{buildroot}/%{_pkgdocdir}
-# The system repo is not installed by the flatpak build system.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
 install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
@@ -162,9 +160,7 @@ fi
 
 %files -f %{name}.lang
 %license COPYING
-# Comply with the packaging guidelines about not mixing relative and absolute
-# paths in doc.
-%doc %{_pkgdocdir}
+%doc NEWS README.md
 %{_bindir}/flatpak
 %{_bindir}/flatpak-bisect
 %{_bindir}/flatpak-coredumpctl
