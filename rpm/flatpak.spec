@@ -161,7 +161,7 @@ fi
 %license COPYING
 # Comply with the packaging guidelines about not mixing relative and absolute
 # paths in doc.
-%doc %{_pkgdocdir}
+#%doc %{_pkgdocdir}
 %{_bindir}/flatpak
 %{_bindir}/flatpak-bisect
 %{_bindir}/flatpak-coredumpctl
@@ -200,7 +200,6 @@ fi
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
-%{_datadir}/gtk-doc/
 %{_includedir}/%{name}/
 %{_libdir}/libflatpak.so
 %{_libdir}/pkgconfig/%{name}.pc
