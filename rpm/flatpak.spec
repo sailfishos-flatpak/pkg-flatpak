@@ -152,7 +152,7 @@ exit 0
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
 %{_datadir}/zsh/site-functions
 %{_libexecdir}/flatpak-oci-authenticator
-%{_libexecdir}/flatpak-bwrap
+%attr(4755, root, root) %{_libexecdir}/flatpak-bwrap
 %{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
