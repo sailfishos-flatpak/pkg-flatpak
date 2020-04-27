@@ -1,7 +1,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.6.2
+Version:        1.6.3
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -9,6 +9,9 @@ License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: libtool
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
