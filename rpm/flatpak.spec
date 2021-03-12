@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
-BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
+BuildRequires:  pkgconfig(libxmlz-2.0) >= 2.4
 #BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
@@ -153,6 +153,7 @@ exit 0
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
 #%{_datadir}/gdm/env.d
+%{_datadir}/fish/
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
@@ -167,10 +168,12 @@ exit 0
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
+%{_sysusersdir}/flatpak.conf
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-%{_libdir}/systemd/user-environment-generators/60-flatpak
+%{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
+%{_prefix}/lib/systemd/user-environment-generators/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
