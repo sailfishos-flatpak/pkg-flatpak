@@ -1,4 +1,5 @@
-%global ostree_version 2018.9
+%global bubblewrap_version 0.4.0
+%global ostree_version 2020.8
 
 Name:           flatpak
 Version:        1.10.2
@@ -24,12 +25,14 @@ BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
+BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  bison
 BuildRequires:  gettext
 BuildRequires:  gpgme-devel
 BuildRequires:  libcap-devel
+BuildRequires:  python3-pyparsing
 BuildRequires:  systemd
 BuildRequires:  xdg-dbus-proxy
 
