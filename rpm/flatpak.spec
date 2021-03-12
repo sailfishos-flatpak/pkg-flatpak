@@ -1,7 +1,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.6.5
+Version:        1.10.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -164,7 +164,7 @@ exit 0
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
-%{_prefix}%{_unitdir}/flatpak-system-helper.service
+%{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
 %{_libdir}/systemd/user-environment-generators/60-flatpak
