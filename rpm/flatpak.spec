@@ -25,14 +25,14 @@ BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
-BuildRequires:  pkgconfig(libzstd) >= 0.8.1
+#BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  bison
 BuildRequires:  gettext
 BuildRequires:  gpgme-devel
 BuildRequires:  libcap-devel
-BuildRequires:  python3-pyparsing
+#BuildRequires:  python3-pyparsing
 BuildRequires:  systemd
 BuildRequires:  xdg-dbus-proxy
 
@@ -97,7 +97,7 @@ This package contains installed tests for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/flatpak
-
+cp ../pyparsing/pyparsing.py variant-schema-compiler/variant-schema-compiler
 
 %build
 # Fix generic python shebangs.
