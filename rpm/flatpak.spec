@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
-BuildRequires:  pkgconfig(libxmlz-2.0) >= 2.4
+BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 #BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
