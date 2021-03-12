@@ -152,7 +152,7 @@ exit 0
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
-%{_datadir}/gdm/env.d
+#%{_datadir}/gdm/env.d
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
