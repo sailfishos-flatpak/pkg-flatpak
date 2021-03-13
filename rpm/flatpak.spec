@@ -126,6 +126,9 @@ install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
+# remove generators as they confuse SFOS
+rm -f %{buildroot}%{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
+rm -f %{buildroot}%{_prefix}/lib/systemd/user-environment-generators/60-flatpak
 
 %pre
 getent group flatpak >/dev/null || groupadd -r flatpak
@@ -172,8 +175,8 @@ exit 0
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-%{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
-%{_prefix}/lib/systemd/user-environment-generators/60-flatpak
+#%{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
+#%{_prefix}/lib/systemd/user-environment-generators/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
