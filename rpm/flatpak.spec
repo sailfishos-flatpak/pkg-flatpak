@@ -1,4 +1,3 @@
-%global appstream_version 0.15.3
 %global bubblewrap_version 0.5.0
 %global ostree_version 2020.8
 
@@ -14,7 +13,7 @@ Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
-BuildRequires:  pkgconfig(appstream-glib) >= %{appstream_version}
+BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  gdk-pixbuf
