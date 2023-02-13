@@ -1,20 +1,20 @@
-%global bubblewrap_version 0.4.0
+%global appstream_version 0.15.3
+%global bubblewrap_version 0.5.0
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.10.2
+Version:        1.14.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-Source10:       pyparsing.py
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
-BuildRequires:  pkgconfig(appstream-glib)
+BuildRequires:  pkgconfig(appstream-glib) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  gdk-pixbuf
@@ -46,7 +46,7 @@ Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%
 Recommends:     p11-kit-server
 
 # comment out to break cycle
-#Requires:       xdg-desktop-portal > 0.10
+Requires:       xdg-desktop-portal > 0.10
 
 %description
 flatpak is a system for building, distributing and running sandboxed desktop
@@ -98,15 +98,12 @@ This package contains installed tests for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/flatpak
+cp ../pyparsing/pyparsing.py variant-schema-compiler/
 
 %build
-# add pyparsing
-cp %{SOURCE10} variant-schema-compiler/
-
 # Fix generic python shebangs.
 find tests -name '*.py' -exec \
-     sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
-
+    sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
 
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--disable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
