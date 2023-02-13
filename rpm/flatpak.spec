@@ -97,7 +97,7 @@ This package contains installed tests for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/flatpak
-cp ../pyparsing/pyparsing.py variant-schema-compiler/
+#cp ../pyparsing/pyparsing.py variant-schema-compiler/
 
 %build
 # Fix generic python shebangs.
