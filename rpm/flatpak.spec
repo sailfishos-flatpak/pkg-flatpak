@@ -28,6 +28,7 @@ BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 #BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
+BuildRequires:  pkgconfig(libcurl)
 BuildRequires:  bison
 BuildRequires:  gettext
 BuildRequires:  gpgme-devel
