@@ -2,7 +2,7 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.14.2
+Version:        1.14.4
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
