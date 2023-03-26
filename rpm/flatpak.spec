@@ -8,12 +8,14 @@ Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
-Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+Source0:        %{name}-%{version}.tar.bz2
+Source1:        pyparsing.py
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 BuildRequires:  pkgconfig(appstream-glib)
+BuildRequires:  pkgconfig(appstream)
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  gdk-pixbuf
@@ -25,7 +27,7 @@ BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
-#BuildRequires:  pkgconfig(libzstd) >= 0.8.1
+BuildRequires:  libzstd-devel >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libcurl)
@@ -98,9 +100,11 @@ This package contains installed tests for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/flatpak
-#cp ../pyparsing/pyparsing.py variant-schema-compiler/
+
+cp %{SOURCE1} subprojects/variant-schema-compiler/
 
 %build
+
 # Fix generic python shebangs.
 find tests -name '*.py' -exec \
     sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
@@ -156,7 +160,7 @@ exit 0
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
-#%{_datadir}/gdm/env.d
+#{_datadir}/gdm/env.d
 %{_datadir}/fish/
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
@@ -176,8 +180,8 @@ exit 0
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-#%{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
-#%{_prefix}/lib/systemd/user-environment-generators/60-flatpak
+#{_prefix}/lib/systemd/system-environment-generators/60-flatpak-system-only
+#{_prefix}/lib/systemd/user-environment-generators/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
